@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TaskContainer extends StatelessWidget {
+class TaskContainer extends StatefulWidget {
   const TaskContainer({
     super.key,
     required this.task,
   });
 
   final String task;
+
+  @override
+  State<TaskContainer> createState() => _TaskContainerState();
+}
+
+class _TaskContainerState extends State<TaskContainer> {
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +23,10 @@ class TaskContainer extends StatelessWidget {
         horizontal: 8,
       ),
       child: Container(
+        alignment: Alignment(0.0, 0.0),
         padding: const EdgeInsets.symmetric(
-          horizontal: 156,
-          vertical: 24,
+          horizontal: 8,
+          vertical: 8,
         ),
         decoration: const BoxDecoration(
           color: const Color(0x992F8DFF),
@@ -26,13 +34,29 @@ class TaskContainer extends StatelessWidget {
             Radius.circular(16),
           ),
         ),
-        child: Text(
-          task,
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.white,
-          ),
-        ),
+        child: Row(
+          children: [
+            Checkbox(
+              value: isChecked,
+              onChanged: (value) {
+                setState(() {
+                  isChecked = value!;
+                });
+              },
+            ),
+            Flexible(
+              child: Text(
+                widget.task,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+                softWrap: true,
+                overflow: TextOverflow.visible,
+              ),
+            ),
+          ],
+        )
       ),
     );
   }
